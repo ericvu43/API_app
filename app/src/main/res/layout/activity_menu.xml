@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    style="@style/menu_background"
+    tools:context=".MenuActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/top_bar"
+        style="@style/top_bar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <Button
+            android:id="@+id/logout_button"
+            style="@style/menu_button"
+            android:text="@string/logout"
+            android:textSize="30sp"
+            android:insetTop="-1dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/filter_spinner"/>
+
+        <Spinner
+            android:id="@+id/filter_spinner"
+            style="@style/filter_spinner"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/logout_button"
+            app:layout_constraintRight_toLeftOf="@id/add_button"/>
+
+        <Button
+            android:id="@+id/add_button"
+            style="@style/add_button"
+            android:text="@string/add_new"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/filter_spinner"
+            app:layout_constraintRight_toLeftOf="@id/about_button"/>
+
+        <Button
+            android:id="@+id/about_button"
+            style="@style/menu_button"
+            android:text="@string/about"
+            android:textSize="35sp"
+            android:insetTop="-5dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/add_button"
+            app:layout_constraintRight_toRightOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/saved_call_recyclerview"
+        style="@style/saved_call_recyclerview"
+        app:layout_constraintTop_toBottomOf="@id/top_bar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    style="@style/auth_background"
+    tools:context=".SignupActivity">
+
+    <TextView
+        style="@style/auth_title"
+        android:text="@string/signup"/>
+
+    <EditText
+        android:id="@+id/signup_email"
+        style="@style/auth_input_fields"
+        android:hint="@string/email_address"
+        android:autofillHints="emailAddress"
+        android:inputType="textEmailAddress"/>
+
+    <EditText
+        android:id="@+id/signup_password"
+        style="@style/auth_input_fields"
+        android:hint="@string/password"
+        android:autofillHints="password"
+        android:inputType="textPassword"/>
+
+    <EditText
+        android:id="@+id/signup_confirm_password"
+        style="@style/auth_input_fields"
+        android:hint="@string/confirm_password"
+        android:autofillHints="password"
+        android:inputType="textPassword"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/button_row">
+
+        <Button
+            android:id="@+id/signup_navigate_button"
+            style="@style/auth_navigate_button"
+            android:text="@string/navigate_login"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/signup_submit_button"/>
+
+        <Button
+            android:id="@+id/signup_submit_button"
+            style="@style/auth_submit_button"
+            android:text="@string/signup"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/signup_navigate_button"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

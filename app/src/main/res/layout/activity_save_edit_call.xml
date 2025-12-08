@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    style="@style/save_edit_background"
+    tools:context=".SaveEditCallActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/save_edit_title_bar"
+        style="@style/save_edit_title_bar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <Button
+            android:id="@+id/back_button"
+            style="@style/save_edit_back_button"
+            android:text="@string/back"
+            app:layout_constraintTop_toTopOf="@id/save_edit_title"
+            app:layout_constraintBottom_toBottomOf="@id/save_edit_title"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_bias="0.025"/>
+
+        <TextView
+            android:id="@+id/save_edit_title"
+            style="@style/save_edit_title"
+            android:text="@string/placeholder_call"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View style="@style/save_edit_separator"/>
+
+    <ScrollView style="@style/save_edit_scroll"
+        android:layout_weight="1">
+
+        <LinearLayout style="@style/save_edit_scroll"
+            android:layout_width="410dp">
+
+            <TextView
+            android:id="@+id/name_label"
+            style="@style/save_edit_label"
+            android:text="@string/call_name"
+            android:labelFor="@id/name_field"/>
+
+            <EditText
+                android:id="@+id/name_field"
+                style="@style/save_edit_field"
+                android:autofillHints=""/>
+
+            <View style="@style/save_edit_separator"/>
+
+            <TextView
+                android:id="@+id/description_label"
+                style="@style/save_edit_label"
+                android:text="@string/call_description"
+                android:labelFor="@id/description_field"/>
+
+            <EditText
+                android:id="@+id/description_field"
+                style="@style/save_edit_field"
+                android:autofillHints=""/>
+
+            <View style="@style/save_edit_separator"/>
+
+            <TextView
+                android:id="@+id/url_label"
+                style="@style/save_edit_label"
+                android:text="@string/call_url"
+                android:labelFor="@id/url_field"/>
+
+            <EditText
+                android:id="@+id/url_field"
+                style="@style/save_edit_field"
+                android:inputType="textUri"
+                android:autofillHints=""/>
+
+            <View style="@style/save_edit_separator"/>
+
+            <TextView
+                android:id="@+id/key_label"
+                style="@style/save_edit_label"
+                android:text="@string/call_key"
+                android:labelFor="@id/key_field"/>
+
+            <EditText
+                android:id="@+id/key_field"
+                style="@style/save_edit_field"
+                android:autofillHints=""/>
+
+            <View style="@style/save_edit_separator"/>
+
+            <Button
+                android:id="@+id/response_button"
+                style="@style/save_edit_button"
+                android:text="@string/call_response"/>
+
+            <View style="@style/save_edit_separator"/>
+
+            <Button
+                android:id="@+id/save_button"
+                style="@style/save_edit_button"
+                android:text="@string/call_save"/>
+
+            <View style="@style/save_edit_separator"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

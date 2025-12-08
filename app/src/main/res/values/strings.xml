@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Capstone Project</string>
+    <string name="navigate_signup">Register New Account</string>
+    <string name="login">Log In</string>
+    <string name="navigate_login">Existing Account Login</string>
+    <string name="signup">Sign Up</string>
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="forgot_password"><u>Forgot password</u></string>
+    <string name="logout">⎗</string>
+    <string name="about">⍟</string>
+    <string name="add_new">Add API Call</string>
+    <string name="delete">⛒</string>
+    <string name="placeholder_call">Temp API Call</string>
+    <string name="save_call">New API Call</string>
+    <string name="edit_call">Edit API Call</string>
+    <string name="back">←</string>
+    <string name="call_name">API Call Name</string>
+    <string name="call_description">API Call Description</string>
+    <string name="call_url">API Call URL</string>
+    <string name="call_key">API Call Key (Optional)</string>
+    <string name="call_response">Test API Call Response</string>
+    <string name="call_check">Run API Call</string>
+    <string name="call_save">Save API Call</string>
+</resources>
