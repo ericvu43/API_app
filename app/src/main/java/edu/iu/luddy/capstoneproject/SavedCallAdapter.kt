@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
-class SavedCallAdapter(private val dataSet: Array<Pair<String, String>>, private val onItemClick: (Pair<String, String>, String) -> Unit): RecyclerView.Adapter<SavedCallAdapter.ViewHolder>() {
+class SavedCallAdapter(private val dataSet: List<Pair<String, String>>, private val onItemClick: (Pair<String, String>, String) -> Unit): RecyclerView.Adapter<SavedCallAdapter.ViewHolder>() {
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val callBar: ConstraintLayout
         val nameText: TextView

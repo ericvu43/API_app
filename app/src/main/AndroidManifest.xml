@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CapstoneProject">
         <activity
+            android:name=".SavedCallActivity"
+            android:exported="false" />
+        <activity
             android:name=".SaveEditCallActivity"
             android:exported="false" />
         <activity

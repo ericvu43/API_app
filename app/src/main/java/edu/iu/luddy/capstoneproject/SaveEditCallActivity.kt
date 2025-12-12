@@ -2,6 +2,7 @@ package edu.iu.luddy.capstoneproject
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
@@ -37,6 +38,9 @@ class SaveEditCallActivity : AppCompatActivity() {
         val callURL: EditText = findViewById(R.id.url_field)
         val callKey: EditText = findViewById(R.id.key_field)
 
+        if(intent.hasExtra("CALL_NAME")) // REPLACE WITH ITEM ID INSTEAD
+            callName.setText(intent.getStringExtra("CALL_NAME").toString()) // REPLACE WITH ITEM ID INSTEAD
+
         val responseButton: Button = findViewById(R.id.response_button)
         responseButton.setOnClickListener {
             val builder: AlertDialog.Builder = AlertDialog.Builder(this)
@@ -56,6 +60,7 @@ class SaveEditCallActivity : AppCompatActivity() {
                 */
                 val intent = Intent()
                 intent.putExtra("CALL_NAME", callName.text.toString())
+                intent.putExtra("CALL_DESCRIPTION", callDescription.text.toString())
                 setResult(RESULT_OK, intent)
                 finish()
             } else {

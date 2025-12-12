@@ -26,7 +26,7 @@
         <TextView
             android:id="@+id/save_edit_title"
             style="@style/save_edit_title"
-            android:text="@string/placeholder_call"
+            android:text="@string/save_edit_title"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -91,7 +91,8 @@
             <EditText
                 android:id="@+id/key_field"
                 style="@style/save_edit_field"
-                android:autofillHints=""/>
+                android:autofillHints=""
+                android:inputType="textVisiblePassword"/>
 
             <View style="@style/save_edit_separator"/>
 

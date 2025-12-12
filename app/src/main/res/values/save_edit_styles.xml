@@ -51,6 +51,7 @@
     <style name="save_edit_field">
         <item name="android:layout_width">350dp</item>
         <item name="android:layout_height">35dp</item>
+        <item name="android:paddingVertical">5dp</item>
         <item name="android:paddingHorizontal">10dp</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/dusty_lavender</item>
@@ -66,7 +67,7 @@
         <item name="android:background">@drawable/save_edit_button</item>
     </style>
     <style name="save_edit_button">
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">325dp</item>
         <item name="android:layout_height">40dp</item>
         <item name="android:minHeight">0dp</item>
         <item name="android:paddingVertical">0dp</item>
@@ -78,5 +79,51 @@
         <item name="android:textColor">@color/white</item>
         <item name="backgroundTint">@null</item>
         <item name="android:background">@drawable/save_edit_button</item>
+    </style>
+    <style name="description_field">
+        <item name="android:layout_width">350dp</item>
+        <item name="android:layout_height">150dp</item>
+        <item name="android:paddingVertical">5dp</item>
+        <item name="android:paddingHorizontal">10dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/dusty_lavender</item>
+        <item name="android:inputType">text</item>
+        <item name="android:background">@drawable/text_background</item>
+    </style>
+    <style name="key_bar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">65dp</item>
+        <item name="android:layout_marginTop">-15dp</item>
+        <item name="android:layout_marginBottom">-15dp</item>
+    </style>
+    <style name="key_spacer">
+        <item name="android:layout_width">350dp</item>
+        <item name="android:layout_height">0dp</item>
+    </style>
+    <style name="key_field">
+        <item name="android:layout_width">300dp</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:paddingVertical">5dp</item>
+        <item name="android:paddingHorizontal">10dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/dusty_lavender</item>
+        <item name="android:inputType">textPassword</item>
+        <item name="android:background">@drawable/text_background</item>
+    </style>
+    <style name="key_check">
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:checked">false</item>
+        <item name="android:button">@drawable/checkbox</item>
+        <item name="buttonTint">@null</item>
+        <item name="backgroundTint">@null</item>
+    </style>
+    <style name="key_toggle">
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/dusty_lavender</item>
+        <item name="android:textAlignment">center</item>
     </style>
 </resources>

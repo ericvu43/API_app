@@ -16,9 +16,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 
 class MenuActivity : AppCompatActivity() {
+    lateinit var dataSet: MutableList<Pair<String, String>>
+    lateinit var savedCallAdapter: SavedCallAdapter
+
     private val saveEditLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
+        dataSet.add(Pair(result.data?.getStringExtra("CALL_NAME").toString(), result.data?.getStringExtra("CALL_DESCRIPTION").toString()))
+        savedCallAdapter.notifyItemInserted(dataSet.size-1)
         val resultSnackbar: Snackbar = Snackbar.make(findViewById(R.id.main), "Placeholder", 4000)
         resultSnackbar.setBackgroundTint(ContextCompat.getColor(this, R.color.dusty_mauve_dark))
         resultSnackbar.setTextColor(ContextCompat.getColor(this, R.color.white))
@@ -27,10 +32,9 @@ class MenuActivity : AppCompatActivity() {
             val callName = result.data?.getStringExtra("CALL_NAME").toString()
             resultSnackbar.setText("Saved API Call: $callName")
             resultSnackbar.setAction("View") {
-                val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-                builder.setTitle("Navigate to $callName").setPositiveButton("Done") { dialog, which -> }
-                val dialog: AlertDialog = builder.create()
-                dialog.show()
+                val intent = Intent(this, SavedCallActivity::class.java)
+                intent.putExtra("CALL_NAME", callName) // REPLACE WITH ITEM ID INSTEAD
+                startActivity(intent)
             }
         } else if (result.resultCode == Activity.RESULT_CANCELED){
             resultSnackbar.setText("Add API Call Canceled")
@@ -64,17 +68,20 @@ class MenuActivity : AppCompatActivity() {
             saveEditLauncher.launch(intent)
         }
 
-        val dataSet = arrayOf(Pair("Name 1", "Description 1"), Pair("Name 2", "Description 2"), Pair("Name 3", "Description 3"))
-        val savedCallAdapter = SavedCallAdapter(dataSet) { clickedItem, function ->
+        dataSet = mutableListOf(Pair("Name 1", "Description 1"), Pair("Name 2", "Description 2"), Pair("Name 3", "Description 3"))
+        savedCallAdapter = SavedCallAdapter(dataSet) { clickedItem, function ->
             if(function == "navigate") {
-                val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-                builder.setMessage(clickedItem.second).setTitle(clickedItem.first).setNegativeButton("Back") { dialog, which -> }
-                val dialog: AlertDialog = builder.create()
-                dialog.show()
+                val intent = Intent(this, SavedCallActivity::class.java)
+                intent.putExtra("CALL_NAME", clickedItem.first) // REPLACE WITH ITEM ID INSTEAD
+                startActivity(intent)
             }
             if(function == "delete") {
                 val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-                builder.setTitle("You are about to delete ${clickedItem.first}, do you wish to continue?").setPositiveButton("Confirm Delete") { dialog, which -> }.setNegativeButton("Cancel") { dialog, which -> }
+                builder.setTitle("You are about to delete ${clickedItem.first}, do you wish to continue?").setPositiveButton("Confirm Delete") { dialog, which ->
+                    val itemPosition = dataSet.indexOf(clickedItem)
+                    dataSet.remove(clickedItem)
+                    savedCallAdapter.notifyItemRemoved(itemPosition)
+                }.setNegativeButton("Cancel") { dialog, which -> }
                 val dialog: AlertDialog = builder.create()
                 dialog.show()
             }

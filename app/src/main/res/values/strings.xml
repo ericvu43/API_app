@@ -12,7 +12,8 @@
     <string name="about">⍟</string>
     <string name="add_new">Add API Call</string>
     <string name="delete">⛒</string>
-    <string name="placeholder_call">Temp API Call</string>
+    <string name="save_edit_title">New/Edit API Call</string>
+    <string name="placeholder_call">API Call Name</string>
     <string name="save_call">New API Call</string>
     <string name="edit_call">Edit API Call</string>
     <string name="back">←</string>
@@ -20,7 +21,15 @@
     <string name="call_description">API Call Description</string>
     <string name="call_url">API Call URL</string>
     <string name="call_key">API Call Key (Optional)</string>
+    <string name="call_key_2">API Call Key</string>
     <string name="call_response">Test API Call Response</string>
     <string name="call_check">Run API Call</string>
     <string name="call_save">Save API Call</string>
+    <string name="response_expected">Expected API Response</string>
+    <string name="response_edit">Edit API Response</string>
+    <string name="response_save">Save API Response</string>
+    <string name="response_compare">Compare API Call Response</string>
+    <string name="response_history">View API Call History</string>
+    <string name="key_show">Show</string>
+    <string name="key_hide">Hide</string>
 </resources>
