@@ -13,4 +13,6 @@
     <color name="almond_silk_dark">#F5D3C8</color>
     <color name="almond_silk_light">#FADBD1</color>
     <color name="soft_blush">#FFE3D9</color>
+    <color name="pass">#D9FFDF</color>
+    <color name="fail">#FFCBCB</color>
 </resources>

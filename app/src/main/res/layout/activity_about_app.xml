@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    style="@style/menu_background"
+    tools:context=".AboutAppActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/save_edit_title_bar"
+        style="@style/save_edit_title_bar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <Button
+            android:id="@+id/back_button"
+            style="@style/save_edit_back_button"
+            android:text="@string/back"
+            app:layout_constraintTop_toTopOf="@id/title"
+            app:layout_constraintBottom_toBottomOf="@id/title"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_bias="0.025"/>
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/save_edit_title"
+            android:text="@string/about_title"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View style="@style/save_edit_separator"/>
+
+    <ScrollView style="@style/save_edit_scroll"
+        android:layout_weight="1">
+
+        <LinearLayout style="@style/save_edit_scroll"
+            android:layout_width="410dp">
+
+            <TextView
+                android:id="@+id/name_label"
+                style="@style/save_edit_label"
+                android:text="@string/name_label"/>
+
+            <TextView
+                android:id="@+id/name"
+                style="@style/save_edit_field"
+                android:text="@string/name"/>
+
+            <View style="@style/save_edit_separator"/>
+
+            <TextView
+                android:id="@+id/members_label"
+                style="@style/save_edit_label"
+                android:text="@string/members"/>
+
+            <TextView
+                android:id="@+id/member_1"
+                style="@style/save_edit_field"
+                android:text="@string/member_1"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:id="@+id/member_2"
+                style="@style/save_edit_field"
+                android:text="@string/member_2"/>
+
+            <View style="@style/save_edit_separator"/>
+
+            <TextView
+                android:id="@+id/description_label"
+                style="@style/save_edit_label"
+                android:text="@string/description_label"/>
+
+            <TextView
+                android:id="@+id/project_description"
+                style="@style/about_description"
+                android:text="@string/description"/>
+
+            <View style="@style/save_edit_separator"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

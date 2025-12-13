@@ -68,6 +68,12 @@ class MenuActivity : AppCompatActivity() {
             saveEditLauncher.launch(intent)
         }
 
+        val aboutButton: Button = findViewById(R.id.about_button)
+        aboutButton.setOnClickListener {
+            val intent = Intent(this, AboutAppActivity::class.java)
+            startActivity(intent)
+        }
+
         dataSet = mutableListOf(Pair("Name 1", "Description 1"), Pair("Name 2", "Description 2"), Pair("Name 3", "Description 3"))
         savedCallAdapter = SavedCallAdapter(dataSet) { clickedItem, function ->
             if(function == "navigate") {
@@ -81,6 +87,7 @@ class MenuActivity : AppCompatActivity() {
                     val itemPosition = dataSet.indexOf(clickedItem)
                     dataSet.remove(clickedItem)
                     savedCallAdapter.notifyItemRemoved(itemPosition)
+                    savedCallAdapter.notifyItemRangeChanged(0, dataSet.size)
                 }.setNegativeButton("Cancel") { dialog, which -> }
                 val dialog: AlertDialog = builder.create()
                 dialog.show()

@@ -32,4 +32,18 @@
     <string name="response_history">View API Call History</string>
     <string name="key_show">Show</string>
     <string name="key_hide">Hide</string>
+    <string name="date_time">Run API Call to set DateTime</string>
+    <string name="toggle_raw">Toggle Raw Response</string>
+    <string name="toggle_formatted">Toggle Formatted Response</string>
+    <string name="call_history">API Call History</string>
+    <string name="arrow_up">⋀</string>
+    <string name="arrow_down">⋁</string>
+    <string name="about_title">About the App</string>
+    <string name="name_label">Application Name</string>
+    <string name="name">API Response Tester</string>
+    <string name="members">Project Members</string>
+    <string name="member_1">Jason Rabinowitz</string>
+    <string name="member_2">Eric Vu</string>
+    <string name="description_label">Project Description</string>
+    <string name="description">An android application that allows users to save and test API calls against provided data. The application allows users to create accounts to save their API calls and expected responses and display the API response json as as either straight json or formatted text to make the received response easier to read. This application also allow users to save API keys for API compatibility.</string>
 </resources>

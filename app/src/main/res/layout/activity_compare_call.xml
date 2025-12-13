@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    style="@style/save_edit_background"
+    tools:context=".CompareCallActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/save_edit_title_bar"
+        style="@style/save_edit_title_bar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <Button
+            android:id="@+id/back_button"
+            style="@style/save_edit_back_button"
+            android:text="@string/back"
+            app:layout_constraintTop_toTopOf="@id/call_name"
+            app:layout_constraintBottom_toBottomOf="@id/call_name"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_bias="0.025"/>
+
+        <TextView
+            android:id="@+id/call_name"
+            style="@style/save_edit_title"
+            android:text="@string/placeholder_call"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View style="@style/save_edit_separator"/>
+
+    <ScrollView style="@style/save_edit_scroll"
+        android:layout_weight="1">
+
+        <LinearLayout style="@style/save_edit_scroll"
+            android:layout_width="410dp">
+
+            <TextView
+                android:id="@+id/date_time"
+                style="@style/info_label"
+                android:text="@string/date_time"/>
+
+            <View style="@style/save_edit_separator"/>
+
+            <TextView
+                android:id="@+id/url_label"
+                style="@style/save_edit_label"
+                android:text="@string/call_url"/>
+
+            <TextView
+                android:id="@+id/call_url"
+                style="@style/save_edit_field"/>
+
+            <View style="@style/save_edit_separator"/>
+
+            <LinearLayout
+                android:id="@+id/response_bar"
+                style="@style/response_bar">
+
+                <TextView
+                    android:id="@+id/current_response"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="7.5dp"
+                    style="@style/response_text"/>
+
+                <TextView
+                    android:id="@+id/expected_response"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="7.5dp"
+                    style="@style/response_text"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/response_toggle"
+                android:text="@string/toggle_raw"
+                style="@style/toggle_button"/>
+
+            <View style="@style/save_edit_separator"/>
+
+            <Button
+                android:id="@+id/response_button"
+                style="@style/save_edit_button"
+                android:text="@string/call_response"/>
+
+            <View style="@style/save_edit_separator"/>
+
+            <Button
+                android:id="@+id/edit_button"
+                style="@style/save_edit_button"
+                android:text="@string/edit_call"/>
+
+            <View style="@style/save_edit_separator"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

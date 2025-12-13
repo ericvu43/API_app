@@ -12,6 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CapstoneProject">
         <activity
+            android:name=".AboutAppActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CallHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CompareCallActivity"
+            android:exported="false" />
+        <activity
             android:name=".SavedCallActivity"
             android:exported="false" />
         <activity

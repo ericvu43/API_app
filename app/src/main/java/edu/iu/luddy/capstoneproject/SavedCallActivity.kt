@@ -71,6 +71,13 @@ class SavedCallActivity : AppCompatActivity() {
             dialog.show()
         }
 
+        val compareButton: Button = findViewById(R.id.compare_button)
+        compareButton.setOnClickListener {
+            val intent = Intent(this, CompareCallActivity::class.java)
+            intent.putExtra("CALL_NAME", callName.text.toString()) // REPLACE WITH ITEM ID INSTEAD
+            startActivity(intent)
+        }
+
         val editButton: Button = findViewById(R.id.edit_button)
         editButton.setOnClickListener {
             val intent = Intent(this, SaveEditCallActivity::class.java)
@@ -80,10 +87,9 @@ class SavedCallActivity : AppCompatActivity() {
 
         val historyButton: Button = findViewById(R.id.history_button)
         historyButton.setOnClickListener {
-            val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-            builder.setTitle("Go to Activity").setMessage("CallHistoryActivity").setPositiveButton("Done") { dialog, which -> }
-            val dialog: AlertDialog = builder.create()
-            dialog.show()
+            val intent = Intent(this, CallHistoryActivity::class.java)
+            intent.putExtra("CALL_NAME", callName.text.toString()) // REPLACE WITH ITEM ID INSTEAD
+            startActivity(intent)
         }
     }
 }
