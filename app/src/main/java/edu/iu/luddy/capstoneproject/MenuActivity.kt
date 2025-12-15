@@ -284,15 +284,14 @@ class MenuActivity : AppCompatActivity() {
         val docId = nameToDocId[name]
 
         if (docId != null) {
-            userCallsCollection().document(docId)
-                .delete()
-                .addOnSuccessListener {
+            deleteSavedCallAndHistory(
+                callId = docId,
+                onSuccess = {
                     nameToDocId.remove(name)
                     onSuccess()
-                }
-                .addOnFailureListener { e ->
-                    onFailure(e.localizedMessage ?: "Delete failed.")
-                }
+                },
+                onFailure = onFailure
+            )
             return
         }
 
@@ -306,15 +305,64 @@ class MenuActivity : AppCompatActivity() {
                     onFailure("Could not find item to delete.")
                     return@addOnSuccessListener
                 }
-                doc.reference.delete()
-                    .addOnSuccessListener { onSuccess() }
-                    .addOnFailureListener { e ->
-                        onFailure(e.localizedMessage ?: "Delete failed.")
-                    }
+
+                deleteSavedCallAndHistory(
+                    callId = doc.id,
+                    onSuccess = onSuccess,
+                    onFailure = onFailure
+                )
             }
             .addOnFailureListener { e ->
                 onFailure(e.localizedMessage ?: "Delete failed.")
             }
+    }
+
+    private fun deleteSavedCallAndHistory(
+        callId: String,
+        onSuccess: () -> Unit,
+        onFailure: (msg: String) -> Unit
+    ) {
+        val uid = auth.currentUser?.uid
+        if (uid.isNullOrBlank()) {
+            onFailure("Not logged in.")
+            return
+        }
+
+        val callRef = db.collection("users").document(uid)
+            .collection("savedCalls").document(callId)
+
+        val historyRef = callRef.collection("history")
+
+        fun deleteHistoryPage() {
+            historyRef.limit(500)
+                .get()
+                .addOnSuccessListener { snap ->
+                    if (snap.isEmpty) {
+                        callRef.delete()
+                            .addOnSuccessListener { onSuccess() }
+                            .addOnFailureListener { e ->
+                                onFailure(e.localizedMessage ?: "Failed to delete call.")
+                            }
+                        return@addOnSuccessListener
+                    }
+
+                    val batch = db.batch()
+                    for (d in snap.documents) batch.delete(d.reference)
+
+                    batch.commit()
+                        .addOnSuccessListener {
+                            deleteHistoryPage()
+                        }
+                        .addOnFailureListener { e ->
+                            onFailure(e.localizedMessage ?: "Failed to delete history.")
+                        }
+                }
+                .addOnFailureListener { e ->
+                    onFailure(e.localizedMessage ?: "Failed to load history for deletion.")
+                }
+        }
+
+        deleteHistoryPage()
     }
 }
 
