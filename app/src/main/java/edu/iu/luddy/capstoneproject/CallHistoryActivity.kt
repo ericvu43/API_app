@@ -11,12 +11,30 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 
 class CallHistoryActivity : AppCompatActivity() {
-    lateinit var dataSet: MutableList<Triple<String, String, Boolean>>
-    lateinit var callHistoryAdapter: CallHistoryAdapter
 
-    var toggleState = false
+    data class HistoryItem(
+        val id: String,
+        val label: String,
+        val dateTime: String,
+        val passed: Boolean?,
+        val createdAt: Long
+    )
+
+    private val auth by lazy { FirebaseAuth.getInstance() }
+    private val db by lazy { FirebaseFirestore.getInstance() }
+
+    private lateinit var titleTv: TextView
+    private lateinit var recycler: RecyclerView
+
+    private lateinit var dataSet: MutableList<HistoryItem>
+    private lateinit var adapter: CallHistoryAdapter
+
+    private var callId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,40 +45,131 @@ class CallHistoryActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val backButton: Button = findViewById(R.id.back_button)
-        backButton.setOnClickListener {
-            val intent = Intent()
-            setResult(RESULT_CANCELED, intent)
+
+        val uid = auth.currentUser?.uid
+        if (uid == null) {
+            startActivity(Intent(this, LoginActivity::class.java))
             finish()
+            return
         }
 
-        val title: TextView = findViewById(R.id.title)
+        callId = intent.getStringExtra("CALL_ID")
+        if (callId.isNullOrBlank()) {
+            AlertDialog.Builder(this)
+                .setTitle("History Error")
+                .setMessage("Missing CALL_ID. Please open History from SavedCallActivity.")
+                .setPositiveButton("OK") { _, _ -> finish() }
+                .show()
+            return
+        }
 
-        if(intent.hasExtra("CALL_NAME")) // REPLACE WITH ITEM ID INSTEAD
-            title.text = intent.getStringExtra("CALL_NAME").toString()+" - History" // REPLACE WITH ITEM ID INSTEAD
+        val backButton: Button = findViewById(R.id.back_button)
+        backButton.setOnClickListener { finish() }
 
-        dataSet = mutableListOf(Triple("Name 1", "DateTime 1", true), Triple("Name 2", "DateTime 2", false), Triple("Name 3", "DateTime 3", true))
-        callHistoryAdapter = CallHistoryAdapter(dataSet) { clickedItem, function ->
-            if(function == "navigate") {
-                val intent = Intent(this, CompareCallActivity::class.java)
-                intent.putExtra("CALL_NAME", clickedItem.first) // REPLACE WITH ITEM ID INSTEAD
-                intent.putExtra("DATE_TIME", clickedItem.second)
-                startActivity(intent)
-            }
-            if(function == "delete") {
-                val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-                builder.setTitle("You are about to delete ${clickedItem.first}, do you wish to continue?").setPositiveButton("Confirm Delete") { dialog, which ->
-                    val itemPosition = dataSet.indexOf(clickedItem)
-                    dataSet.remove(clickedItem)
-                    callHistoryAdapter.notifyItemRemoved(itemPosition)
-                    callHistoryAdapter.notifyItemRangeChanged(0, dataSet.size)
-                }.setNegativeButton("Cancel") { dialog, which -> }
-                val dialog: AlertDialog = builder.create()
-                dialog.show()
+        titleTv = findViewById(R.id.title)
+        recycler = findViewById(R.id.call_history_recyclerview)
+
+        dataSet = mutableListOf()
+        adapter = CallHistoryAdapter(dataSet) { item, action ->
+            when (action) {
+                "navigate" -> {
+                    val i = Intent(this, CompareCallActivity::class.java)
+                    i.putExtra("CALL_ID", callId)
+                    i.putExtra("HISTORY_ID", item.id)
+                    i.putExtra("DATE_TIME", item.dateTime)
+                    startActivity(i)
+                }
+
+                "delete" -> {
+                    AlertDialog.Builder(this)
+                        .setTitle("Delete this history entry?")
+                        .setMessage("This cannot be undone.")
+                        .setPositiveButton("Delete") { _, _ ->
+                            deleteHistory(uid, callId!!, item.id)
+                        }
+                        .setNegativeButton("Cancel", null)
+                        .show()
+                }
             }
         }
-        val callHistoryRecyclerview: RecyclerView = findViewById(R.id.call_history_recyclerview)
-        callHistoryRecyclerview.layoutManager = LinearLayoutManager(this)
-        callHistoryRecyclerview.adapter = callHistoryAdapter
+
+        recycler.layoutManager = LinearLayoutManager(this)
+        recycler.adapter = adapter
+
+        db.collection("users")
+            .document(uid)
+            .collection("savedCalls")
+            .document(callId!!)
+            .get()
+            .addOnSuccessListener { doc ->
+                val callName = doc.getString("name").orEmpty().ifBlank { "API Call" }
+                titleTv.text = "$callName - History"
+            }
+            .addOnFailureListener {
+                titleTv.text = "History"
+            }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val uid = auth.currentUser?.uid ?: return
+        loadHistory(uid, callId!!)
+    }
+
+    private fun historyCollection(uid: String, callId: String) =
+        db.collection("users")
+            .document(uid)
+            .collection("savedCalls")
+            .document(callId)
+            .collection("history")
+
+    private fun loadHistory(uid: String, callId: String) {
+        historyCollection(uid, callId)
+            .orderBy("createdAt", Query.Direction.DESCENDING)
+            .get()
+            .addOnSuccessListener { snap ->
+                dataSet.clear()
+
+                for (doc in snap.documents) {
+                    val createdAt = doc.getLong("createdAt") ?: 0L
+                    val dateTime = doc.getString("dateTime") ?: doc.getString("datetime") ?: ""
+                    val passed: Boolean? = doc.getBoolean("passed")
+
+                    dataSet.add(
+                        HistoryItem(
+                            id = doc.id,
+                            label = doc.getString("label") ?: "",
+                            dateTime = dateTime,
+                            passed = passed,
+                            createdAt = createdAt
+                        )
+                    )
+                }
+                adapter.notifyDataSetChanged()
+
+            }
+            .addOnFailureListener { e ->
+                AlertDialog.Builder(this)
+                    .setTitle("Load failed")
+                    .setMessage(e.localizedMessage ?: "Could not load call history.")
+                    .setPositiveButton("OK", null)
+                    .show()
+            }
+    }
+
+    private fun deleteHistory(uid: String, callId: String, historyId: String) {
+        historyCollection(uid, callId)
+            .document(historyId)
+            .delete()
+            .addOnSuccessListener {
+                loadHistory(uid, callId)
+            }
+            .addOnFailureListener { e ->
+                AlertDialog.Builder(this)
+                    .setTitle("Delete failed")
+                    .setMessage(e.localizedMessage ?: "Could not delete history entry.")
+                    .setPositiveButton("OK", null)
+                    .show()
+            }
     }
 }
